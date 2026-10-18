@@ -114,5 +114,10 @@ let bad = 0; const ok = (n, c, x = "") => { console.log((c ? "PASS " : "FAIL ") 
   // phone
   const m = await open(b, { wallet: true, w: 390, h: 844 }); await m.goto(url); await m.waitForTimeout(700); await m.click("#bConnect"); await m.waitForTimeout(500); await deploy(m); await m.click("#bRun"); await m.waitForTimeout(3000);
   ok("phone: no sideways scrolling", await m.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)); await m.screenshot({ path: "/tmp/shots/mg_mobile.png", fullPage: true });
+  // the copy-able results text must name the network and the mediator that are actually in use
+  const r = await studio(); const t0 = await r.inputValue("#exOut"); await deploy(r); const addr = await r.inputValue("#addr"); const t1 = await r.inputValue("#exOut");
+  ok("the results text names Studio before a mediator exists", t0.includes("on Studio"), t0.split("\n")[0]);
+  ok("the results text names the mediator once it is deployed", t1.includes("mediator " + addr), t1.split("\n")[0]);
+  await r.click('[data-net="bradbury"]'); await r.waitForTimeout(500); ok("the results text follows a switch to Bradbury", (await r.inputValue("#exOut")).includes("on Bradbury"), (await r.inputValue("#exOut")).split("\n")[0]);
   console.log(bad ? "\n" + bad + " FAILED" : "\nall checks passed"); await b.close(); process.exit(bad ? 1 : 0);
 })();

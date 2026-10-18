@@ -170,6 +170,7 @@ function markSteps() {
   $("bConnect").textContent = conn ? "Connected" : (netId === "studionet" ? "Use the Studio test key" : "Connect wallet"); $("bConnect").disabled = !!conn; $("bDeploy").textContent = has ? "Deploy another mediator" : "Deploy my mediator";
   $("s1p").textContent = netId === "studionet" ? "Studio needs no wallet: this page uses a throwaway test key kept in your browser." : "Use a browser wallet such as MetaMask on the Bradbury test network. You need a little test GEN for gas.";
   $("runNote").textContent = netId === "bradbury" ? "On Bradbury your wallet is the holder and approves each of its steps. The demo claimant key is funded with a little test GEN for gas first, which is one more wallet approval." : "On Studio both sides use test keys, so nothing needs approving.";
+  if (manifest) renderEx();
 }
 async function renderConn() {
   const on = !!conn; $("chip").className = "chip" + (on ? " on" : ""); $("bConnectTop").style.display = on ? "none" : ""; markSteps(); if (!on) return;

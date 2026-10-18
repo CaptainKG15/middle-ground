@@ -37,7 +37,10 @@ A judge's mistake is binding. A mediator's is not: nobody is bound by a proposal
 - `python3 tests/test_middle_ground.py`: 151 off-chain checks, including the money: for every share and several awkward amounts, the two dues add up to exactly the deposit, and however often each party tries to withdraw, exactly the deposit is paid out and never more. A stand-in network replaces the real one, so these test the contract's logic and accounting, not the model.
 - `python3 tests/mutation_test.py`: breaks the contract in 84 small ways and confirms the tests fail each time. **81 of 81 countable mutants killed.** Three more are genuine equivalents (checks that back each other up), listed in the script with the reason for each. The mutation test found four weak spots in the first version of the tests (two used the contract's own constants instead of literal limits, and two cases were never tried); all four are fixed.
 - `python3 tests/test_fixtures.py`: 32 checks that the invented disputes are accepted by the contract's own rules and that the trap evidence page really does contain an instruction.
-- `tests/ui_test.js`: 41 browser checks of the demo page against a simulated chain and a pretend wallet, including a real second person acting as the claimant through a link. It does not use a real network.
+- `tests/ui_test.js`: 44 browser checks of the demo page against a simulated chain and a pretend wallet, including a real second person acting as the claimant through a link. It does not use a real network.
+
+## Observed so far
+One real case on Studio with real validators: a flat-deposit dispute was proposed at 75% to the claimant (the design predicted 70 to 100%), both sides accepted and withdrew, and the proposal's reason cites the evidence page. One case is not a rate. See `RESULTS.md`, including what was not checked.
 
 ## Honest limits
 - **There is no clock in a contract.** A party who simply disappears can stall a case after the claimant has written. The advance agreement helps when the *holder* is the one who might disappear; nothing here forces a silent claimant to answer. Never put in more than you can leave stuck.
